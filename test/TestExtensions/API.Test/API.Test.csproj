@@ -1,0 +1,49 @@
+﻿<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'README.md'))\build\common.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFramework>$(NETFXTargetFramework)</TargetFramework>
+    <SkipSigning>true</SkipSigning>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EnvDTE" Version="8.0.1" />
+    <PackageReference Include="Microsoft.PowerShell.3.ReferenceAssemblies" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>  
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.15.0.DesignTime" Version="15.0.26932" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="15.8.28010" />
+    <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="15.8.132" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="15.8.132" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(NuGetClientsSrcDirectory)NuGet.PackageManagement.VisualStudio\NuGet.PackageManagement.VisualStudio.csproj" />
+  </ItemGroup>
+
+  <Import Project="$(BuildCommonDirectory)common.targets" />
+  <Import Project="$(BuildCommonDirectory)embedinterop.targets" />
+
+  <Target Name="DeployToArtifacts" AfterTargets="Build;Rebuild">
+  <!--
+    Publish test extension artifacts to a well-known location so that
+    Import-Module NuGet.Tests.psm1 is able to locate it.
+  -->
+    <PropertyGroup>
+      <PublishDestination>$(ArtifactRoot)\TestExtensions</PublishDestination>
+    </PropertyGroup>
+    <Message Text="Publishing test extension artifacts..." Importance="high" />
+    <Message Text="$(TargetPath) -&gt; $(PublishDestination)" Importance="high" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PublishDestination)" OverwriteReadOnlyFiles="true" />
+  </Target>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

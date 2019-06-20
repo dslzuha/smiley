@@ -1,0 +1,84 @@
+<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'README.md'))\build\common.test.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <TargetFramework>$(NETFXTargetFramework)</TargetFramework>
+    <NETCoreWPFProject>true</NETCoreWPFProject>
+    <TestProject>true</TestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+  <ItemGroup >
+    <Compile Include="ProjectSystems\LegacyPackageReferenceProjectTests.cs" />
+    <Compile Include="DispatcherThreadCollection.cs" />
+    <Compile Include="Feeds\MultiSourcePackageMetadataProviderTests.cs" />
+    <Compile Include="Feeds\UpdatePackageFeedTests.cs" />
+    <Compile Include="Feeds\InstalledPackageFeedTests.cs" />
+    <Compile Include="FrameworkAssemblyResolverTests.cs" />
+    <Compile Include="ProjectSystems\LegacyPackageReferenceRestoreUtilityTests.cs" />
+    <Compile Include="ProjectSystems\ProjectKNuGetProjectTests.cs" />
+    <Compile Include="ProjectSystems\ProjectSystemCacheTests.cs" />
+    <Compile Include="ProjectSystems\TestVSProjectAdapter.cs" />
+    <Compile Include="Services\NuGetLockServiceTests.cs" />
+    <Compile Include="Telemetry\ActionsTelemetryServiceTests.cs" />
+    <Compile Include="Telemetry\NuGetTelemetryServiceTests.cs" />
+    <Compile Include="Telemetry\RestoreTelemetryServiceTests.cs" />
+    <Compile Include="Telemetry\TestTelemetryUtility.cs" />
+    <Compile Include="VisualStudioAccountProviderTests.cs" />
+    <Compile Include="VisualStudioCredentialProviderTests.cs" />
+    <Compile Include="VsCredentialProviderAdapterTests.cs" />
+    <Compile Include="VsCredentialProviderImporterTests.cs" />
+    <Compile Include="VSRestoreSettingsUtilityTests.cs" />
+    <Compile Include="Telemetry\VsTelemetrySessionTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(NuGetClientsSrcDirectory)NuGet.VisualStudio\NuGet.VisualStudio.csproj" />
+    <ProjectReference Include="$(NuGetClientsSrcDirectory)NuGet.PackageManagement.VisualStudio\NuGet.PackageManagement.VisualStudio.csproj" />
+    <ProjectReference Include="$(TestUtilitiesDirectory)Test.Utility\Test.Utility.csproj" />
+    <ProjectReference Include="$(NuGetClientsSrcDirectory)NuGet.VisualStudio.Common\NuGet.VisualStudio.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.ProjectSystem.Interop">
+      <HintPath>$(SolutionPackagesFolder)Microsoft.VisualStudio.ProjectSystem.16.0.201-pre-g7d366164d0\lib\net46\Microsoft.VisualStudio.ProjectSystem.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="VSLangProj140">
+      <HintPath>$(SolutionPackagesFolder)VSLangProj140.14.0.25029\lib\net20\VSLangProj140.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="VSLangProj150">
+      <HintPath>$(SolutionPackagesFolder)VSLangProj150.1.0.0\lib\net46\VSLangProj150.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EnvDTE" Version="8.0.1" />
+  </ItemGroup>
+
+  <Import Project="$(BuildCommonDirectory)common.targets" />
+  <Import Project="$(BuildCommonDirectory)embedinterop.targets" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

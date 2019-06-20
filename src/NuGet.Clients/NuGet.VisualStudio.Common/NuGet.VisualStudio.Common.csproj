@@ -1,0 +1,79 @@
+<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'README.md'))\build\common.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <TargetFramework>$(NETFXTargetFramework)</TargetFramework>
+    <PackProject>true</PackProject>
+    <Shipping>true</Shipping>
+    <IncludeInVsix>true</IncludeInVsix>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>NuGet.VisualStudio</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.ProjectSystem">
+      <HintPath>$(EnlistmentRoot)\packages\Microsoft.VisualStudio.ProjectSystem.16.0.201-pre-g7d366164d0\lib\net46\Microsoft.VisualStudio.ProjectSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build">
+      <HintPath>$(EnlistmentRoot)\packages\Microsoft.Build.15.1.262-preview5\lib\net46\Microsoft.Build.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <PackageReference Include="Microsoft.TeamFoundationServer.ExtendedClient" Version="$(VSServicesVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.CoreUtility" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Editor" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.StandardClassification" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="$(VSServicesVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="$(VSServicesVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="15.8.28010" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.15.0" Version="15.0.25123-Dev15Preview">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Telemetry" Version="15.0.691-master31907920" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.Data" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.Logic" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.UI" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.UI.Wpf" Version="$(VSComponentsVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.ImageCatalog" Version="15.8.28010" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="15.8.132" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="15.8.132" />
+    <PackageReference Include="VSLangProj" Version="7.0.3300" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EnvDTE80" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.12.0" Version="12.0.30111" />
+    <PackageReference Include="Microsoft.VisualStudio.Workspace.VSIntegration" Version="15.0.198-pre" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(NuGetCoreSrcDirectory)NuGet.PackageManagement\NuGet.PackageManagement.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Import Project="$(BuildCommonDirectory)common.targets" />
+  <Import Project="$(BuildCommonDirectory)embedinterop.targets" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

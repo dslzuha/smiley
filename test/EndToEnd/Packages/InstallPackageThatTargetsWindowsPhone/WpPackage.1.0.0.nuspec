@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>WpPackage</id>
+        <version>1.0.0</version>
+        <title />
+        <authors>kinhln</authors>
+        <owners />
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>My package description.</description>
+    </metadata>
+    <files>
+        <file src="lib\wp7\luan.dll" target="lib\wp7\luan.dll" />
+        <file src="lib\wp8\luan.dll" target="lib\wp8\luan.dll" />
+        <file src="lib\wpa81\luan.dll" target="lib\wpa81\luan.dll" />
+    </files>
+</package>
